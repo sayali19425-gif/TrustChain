@@ -380,9 +380,3 @@ This project is developed for educational and demonstration purposes.
 ---
 
 <div align="center">
-
-**⭐ If you found this project helpful, please give it a star!**
-
-Made with ❤️ using Ethereum, Solidity, React JS, and ethers.js
-
-</div>
