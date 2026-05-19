@@ -368,9 +368,8 @@ PORT=5000
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@your-username](https://github.com/your-username)
-- LinkedIn: [your-linkedin](https://linkedin.com/in/your-linkedin)
-- Email: your.email@example.com
+- GitHub: (https://github.com/sayali19425-gif)
+- Email: sayali19425@gmail.com
 
 ---
 
