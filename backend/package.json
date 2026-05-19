@@ -1,0 +1,5 @@
+{
+  "name": "escrow-backend",
+  "scripts": { "start": "node server.js" },
+  "dependencies": { "cors": "*", "express": "*", "mongoose": "*" }
+}

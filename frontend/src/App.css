@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=DM+Sans:wght@400;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0d0d14;
+  color: #e8e8f0;
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* CONNECT PAGE */
+.center-page { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.hero { text-align: center; }
+.hero h1 { font-family: 'Space Mono', monospace; font-size: 2.5rem; color: #6366f1; margin-bottom: 0.5rem; }
+.hero p { color: #6b7280; margin-bottom: 2rem; }
+
+/* NAVBAR */
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #1f1f2e; }
+.brand { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: #6366f1; }
+.wallet { font-size: 0.85rem; background: #1a1a24; padding: 0.4rem 0.9rem; border-radius: 999px; }
+
+/* TABS */
+.tabs { display: flex; gap: 0.5rem; padding: 1.2rem 2rem 0; }
+.tabs button { background: transparent; border: 1px solid #2a2a3a; color: #6b7280; padding: 0.5rem 1.2rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+.tabs button.active { border-color: #6366f1; color: #6366f1; background: #6366f111; }
+
+/* CONTENT */
+.content { padding: 1.5rem 2rem; max-width: 700px; margin: 0 auto; }
+
+/* CARD */
+.card { background: #111118; border: 1px solid #1f1f2e; border-radius: 14px; padding: 1.5rem; margin-bottom: 1rem; }
+.card h2 { font-family: 'Space Mono', monospace; margin-bottom: 1.2rem; font-size: 1.1rem; }
+.card input { width: 100%; background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 0.7rem 1rem; color: #e8e8f0; font-size: 0.95rem; margin-bottom: 0.8rem; outline: none; }
+.card input:focus { border-color: #6366f1; }
+.card p { font-size: 0.88rem; color: #9ca3af; margin-bottom: 0.3rem; }
+.card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+.badge { font-size: 0.8rem; font-weight: 600; }
+
+/* BUTTONS */
+button { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; padding: 0.65rem 1.4rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; width: 100%; margin-top: 0.5rem; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; }
+.approve { background: linear-gradient(135deg, #059669, #10b981); }
+.cancel { background: transparent; border: 1px solid #ef4444; color: #ef4444; }
+.cancel:hover { background: #ef4444; color: white; }
+
+/* MISC */
+.empty { text-align: center; color: #6b7280; padding: 3rem; }
+.hint { color: #6b7280; font-size: 0.85rem; margin-top: 0.5rem; }
+.list { display: flex; flex-direction: column; gap: 0.8rem; }
