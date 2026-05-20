@@ -1,45 +1,149 @@
 import { ethers } from "ethers";
+import { useEffect, useState } from "react";
 
-const STATUS = ["ACTIVE", "COMPLETED", "CANCELLED"];
-const COLOR = ["#3b82f6", "#10b981", "#ef4444"];
+export default function EscrowList({
+  escrows,
+  account
+}) {
 
-export default function EscrowList({ escrows, contract, account, onUpdate }) {
-  const approve = async (id) => {
-    try { const tx = await contract.approveWork(id); await tx.wait(); onUpdate(); }
-    catch (e) { alert(e.reason || "Failed"); }
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+
+    const saved =
+      JSON.parse(localStorage.getItem("projects")) || [];
+
+    if (saved.length > 0) {
+      setProjects(saved);
+    } else {
+      setProjects(escrows);
+    }
+
+  }, [escrows]);
+
+  const fundProject = async (project) => {
+
+    try {
+
+      if (!window.ethereum) {
+        return alert("Install MetaMask");
+      }
+
+      const provider =
+        new ethers.BrowserProvider(window.ethereum);
+
+      const signer =
+        await provider.getSigner();
+
+      const wallets =
+        JSON.parse(
+          localStorage.getItem("creatorWallets")
+        ) || {};
+
+      const creatorWallet =
+         wallets[String(project.id)];
+
+         if (!creatorWallet) {
+        return alert("Creator wallet not found");
+      }
+
+        console.log(creatorWallet);
+
+      const tx = await signer.sendTransaction({
+        to: creatorWallet,
+        value: project.budget
+      });
+
+      await tx.wait();
+
+      const updated = projects.map((p) => {
+
+        if (p.id === project.id) {
+          return {
+            ...p,
+            funded: true,
+            budget: p.budget.toString()
+          };
+        }
+
+        return {
+          ...p,
+          budget: p.budget.toString()
+        };
+      });
+
+      setProjects(updated);
+
+      localStorage.setItem(
+        "projects",
+        JSON.stringify(updated)
+      );
+
+      alert("Project Funded Successfully!");
+
+    } catch (e) {
+      console.error(e);
+      alert("Funding failed");
+    }
   };
 
-  const cancel = async (id) => {
-    try { const tx = await contract.cancelEscrow(id); await tx.wait(); onUpdate(); }
-    catch (e) { alert(e.reason || "Failed"); }
-  };
-
-  if (escrows.length === 0) return <p className="empty">No escrows yet. Create one!</p>;
+  if (projects.length === 0) {
+    return <p className="empty">No projects yet.</p>;
+  }
 
   return (
     <div className="list">
-      {escrows.map((e, i) => {
-        const isClient = e.client.toLowerCase() === account.toLowerCase();
-        const isActive = Number(e.status) === 0;
+
+      {projects.map((e, i) => {
+
         return (
           <div className="card" key={i}>
+
             <div className="card-top">
+
               <strong>{e.title}</strong>
-              <span className="badge" style={{ color: COLOR[Number(e.status)] }}>{STATUS[Number(e.status)]}</span>
+
+              <span
+                className="badge"
+                style={{
+                  color: e.funded
+                    ? "#10b981"
+                    : "#ef4444"
+                }}
+              >
+                {e.funded
+                  ? "FUNDED"
+                  : "UNFUNDED"}
+              </span>
+
             </div>
-            <p>💰 {ethers.formatEther(e.amount)} ETH</p>
-            <p>👤 Client: {e.client.slice(0, 8)}...</p>
-            <p>🧑‍💻 Freelancer: {e.freelancer.slice(0, 8)}...</p>
-            {isClient && isActive && (
-              <div className="actions">
-                <button className="approve" onClick={() => approve(e.id)}>✅ Approve & Pay</button>
-                <button className="cancel" onClick={() => cancel(e.id)}>❌ Cancel</button>
-              </div>
+
+            <p>
+              🔗 {e.description}
+            </p>
+
+            <p>
+              💰 {ethers.formatEther(e.budget)} ETH
+            </p>
+
+            <p>
+              👤 Creator:
+              {" "}
+              {e.buyer.slice(0, 8)}...
+            </p>
+
+            {!e.funded && (
+              <button
+                onClick={() => fundProject(e)}
+              >
+                Fund Project
+              </button>
             )}
-            {!isClient && isActive && <p className="hint">⏳ Waiting for client approval</p>}
+
           </div>
         );
       })}
+
     </div>
   );
 }

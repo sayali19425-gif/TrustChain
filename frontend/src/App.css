@@ -49,3 +49,13 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .empty { text-align: center; color: #6b7280; padding: 3rem; }
 .hint { color: #6b7280; font-size: 0.85rem; margin-top: 0.5rem; }
 .list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.role-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.role-buttons button {
+  flex: 1;
+}
